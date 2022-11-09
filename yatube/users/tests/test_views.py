@@ -1,7 +1,7 @@
+from django import forms
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
-from django import forms
 
 User = get_user_model()
 
@@ -14,15 +14,20 @@ class UsersPagesTests(TestCase):
         cls.template_url_names = {
             reverse('users:login'): 'users/login.html',
             reverse('users:signup'): 'users/signup.html',
-            reverse('users:password_reset_form'): 'users/password_reset_form.html',
-            reverse('users:password_reset_done'): 'users/password_reset_done.html',
+            reverse('users:password_reset_form'):
+                'users/password_reset_form.html',
+            reverse('users:password_reset_done'):
+                'users/password_reset_done.html',
             reverse(
                 'users:password_reset_confirm',
                 kwargs={'uidb64': 'NA', 'token': 'x'}):
                 'users/password_reset_confirm.html',
-            reverse('users:password_reset_complete'): 'users/password_reset_complete.html',
-            reverse('users:password_change'): 'users/password_change_form.html',
-            reverse('users:password_change_done'): 'users/password_change_done.html',
+            reverse('users:password_reset_complete'):
+                'users/password_reset_complete.html',
+            reverse('users:password_change'):
+                'users/password_change_form.html',
+            reverse('users:password_change_done'):
+                'users/password_change_done.html',
             reverse('users:contact'): 'users/contact.html',
             reverse('users:logout'): 'users/logged_out.html',
         }

@@ -125,7 +125,7 @@ class PostUrlTest(TestCase):
              f'/posts/{self.post.id}/'),
             (reverse('posts:post_edit', kwargs={'post_id': self.post.id}),
              f'/posts/{self.post.id}/edit/'),
-            (reverse('posts:post_create'), f'/create/')
+            (reverse('posts:post_create'), '/create/'),
         ]
         for reverse_address, path_name in url_names:
             with self.subTest(reverse_address=reverse_address):

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 def page_not_found(request, exception):
 
     return render(
@@ -9,8 +10,10 @@ def page_not_found(request, exception):
         status=404
     )
 
+
 def csrf_failure(request, reason=''):
     return render(request, 'core/403csrf.html')
+
 
 def server_error(request):
     return render(request, 'core/500.html', status=500)

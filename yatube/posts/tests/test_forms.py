@@ -189,4 +189,3 @@ class PostCreateFormTests(TestCase):
         )
         redirect = f'/auth/login/?next=/posts/{self.post.id}/comment/'
         self.assertRedirects(response, redirect)
-

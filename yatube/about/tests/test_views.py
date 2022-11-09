@@ -21,4 +21,3 @@ class AboutPagesTest(TestCase):
             with self.subTest(names=names):
                 response = self.guest_client.get(names)
                 self.assertTemplateUsed(response, templates)
-

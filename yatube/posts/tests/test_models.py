@@ -27,7 +27,7 @@ class PostModelTest(TestCase):
     def test_models_post_group_have_correct_str_objects_name(self):
         """Проверяем, что у моделей Post, Group корректно работает __str__."""
         expected_obj_name = self.post.text[:LEN_TEXT_STR_]
-        error_message = f"Длина вывода не 15 символов"
+        error_message = "Длина вывода не 15 символов"
         self.assertEqual(expected_obj_name, self.post.__str__(), error_message)
 
         expected_obj_group_name = self.group.title

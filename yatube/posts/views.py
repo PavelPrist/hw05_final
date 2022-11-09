@@ -6,6 +6,7 @@ from .forms import CommentForm, PostForm
 from .models import Group, Post, User, Follow
 from .utils import paginator_page
 
+
 @cache_page(20, key_prefix='index_page')
 def index(request):
     posts = Post.objects.select_related("group")
@@ -121,6 +122,7 @@ def post_edit(request, post_id):
     }
     return render(request, template, context)
 
+
 @login_required
 def follow_index(request):
     posts = (
@@ -137,6 +139,7 @@ def follow_index(request):
     }
     return render(request, template, context)
 
+
 @login_required
 def profile_follow(request, username):
     following_author = get_object_or_404(User, username=username)
@@ -147,6 +150,7 @@ def profile_follow(request, username):
             author=following_author
         )
     return redirect('posts:profile', username)
+
 
 @login_required
 def profile_unfollow(request, username):
