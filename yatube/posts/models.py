@@ -66,7 +66,7 @@ class Comment(models.Model):
         Post,
         on_delete=models.CASCADE,
         related_name='comments',
-        verbose_name='Комментарии',
+        verbose_name='Комментируемый пост',
         help_text='Комментарии к посту'
     )
     author = models.ForeignKey(
@@ -111,6 +111,12 @@ class Follow(models.Model):
     class Meta:
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'user'],
+                name='unique_following'
+            )
+        ]
 
     def __str__(self):
         return f'{self.user.username}, {self.following.username}'

@@ -132,10 +132,8 @@ def follow_index(request):
     )
     page_obj = paginator_page(request, posts)
     template = 'posts/follow.html'
-    title = 'Посты избранных авторов'
     context = {
-        'page_obj': page_obj,
-        'title': title
+        'page_obj': page_obj
     }
     return render(request, template, context)
 
@@ -154,11 +152,8 @@ def profile_follow(request, username):
 
 @login_required
 def profile_unfollow(request, username):
-    following_author = get_object_or_404(User, username=username)
-    follower = request.user
-    follower_is = Follow.objects.filter(
-        user=follower, author=following_author
-    )
-    if follower_is.exists():
-        follower_is.delete()
+    Follow.objects.filter(
+        user=request.user,
+        author__username=username
+    ).delete()
     return redirect('posts:profile', username)

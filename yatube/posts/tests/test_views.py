@@ -40,7 +40,7 @@ class PostPagesTest(TestCase):
             content_type='image/gif'
         )
         cls.user = User.objects.create_user(username='NameTest')
-        cls.author_new = User.objects.create_user(username='Author1')
+        cls.author_new = User.objects.create_user(username='Author')
         cls.group = Group.objects.create(
             title='Тестовая группа',
             slug='test-slug',
