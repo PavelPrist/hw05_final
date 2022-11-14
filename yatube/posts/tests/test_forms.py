@@ -102,6 +102,12 @@ class PostCreateFormTests(TestCase):
         self.func_redirect_and_tests_post_correct_created_form_fields(
             response, form_data, redirect)
 
+    def test_post_edit_get_correct_instance_of_post(self):
+        """Тест post_edit получает корректные данные выбранного поста."""
+        path = reverse('posts:post_edit', kwargs={'post_id': self.post.id})
+        response = self.authorized_client.get(path, instance=self.post)
+        self.assertEqual(response.context["form"].instance, self.post)
+
     def test_post_edit_form_valid_by_authorized_user(self):
         """
         Тест: валидная форма edite_post, авторизованный пользователь меняет

@@ -21,12 +21,16 @@
     <div class="media-body">
       <h5 class="mt-0">
         <a href="{% url 'posts:profile' comment.author.username %}">
-          {{ comment.author.username }}
+          {{ comment.author.get_full_name }}
         </a>
       </h5>
       <p>
         {{ comment.text }}
       </p>
+
+              <br>
+              <a href="{% url 'posts:delete_comment' comment.pk %}">Удалить запись</a>
+
     </div>
   </div>
 {% endfor %}

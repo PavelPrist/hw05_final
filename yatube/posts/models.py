@@ -49,6 +49,9 @@ class Post(CreatedModel):
         upload_to='posts/',
         blank=True
     )
+    is_published = models.BooleanField(
+        default = False
+    )
 
     def __str__(self) -> str:
 

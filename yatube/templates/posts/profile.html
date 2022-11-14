@@ -4,7 +4,9 @@
 {% load thumbnail %}
 
 <div class="container col-lg-9 col-sm-12">
+
     <h1>Все посты пользователя: {{ author.get_full_name }} </h1>
+
     <h3>Всего постов: {{ page_obj.paginator.count }} </h3>
         {% if author != request.user %}
           {% if following %}
@@ -27,7 +29,10 @@
     <hr>
 
 <article>
+
     {% for post in page_obj %}
+        {% if post.is_published %}
+
     {% include 'includes/post_list.html' %}
 
     <p>{% if post.group %}
@@ -35,10 +40,22 @@
     {% endif %}
 
     {% if not forloop.last %}<hr>{% endif %}
-
+         {% else %}
+            <article>
+            <div class="list-group"
+                 <li class="list-group-item">
+                     Пост № {{ post.pk }} Извините. Ожидает одобрения администрацией.
+                 </li>
+            </article>
+{% endif %}
   {% endfor %}
 
   {% include 'includes/paginator.html' %}
+
+</article>
+
 {% endblock %}
+
 </div>
+
 

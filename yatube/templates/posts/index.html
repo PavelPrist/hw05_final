@@ -3,6 +3,16 @@
 
 {% block content %}
 
+<section class="container">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-sm-12 d-flex justify-content-center mt-4 mb-4">
+              <img class="img-fluid" src="/static/img/welcome.png" width="500" height="300" alt="Баннер True Stories">
+            </div>
+          </div>
+        </div>
+</section>
+
 
     <div class="container col-lg-9 col-sm-12">
     {% include 'posts/includes/switcher.html' %}
@@ -10,14 +20,21 @@
       <hr>
 
       {% for post in page_obj %}
-
+        {% if post.is_published %}
         {% include 'includes/post_list.html' %}
 
         <p>{% if post.group %}
           <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
         {% endif %}
         {% if not forloop.last %}<hr>{% endif %}
-
+            {% else %}
+            <article>
+            <div class="list-group"
+                 <li class="list-group-item">
+                     Пост № {{ post.pk }} Извините. Ожидает одобрения администрацией.
+                 </li>
+            </article>
+        {% endif %}
       {% endfor %}
 
       {% include 'includes/paginator.html' %}

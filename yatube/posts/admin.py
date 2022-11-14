@@ -10,12 +10,13 @@ class PostAdmin(admin.ModelAdmin):
         'text',
         'pub_date',
         'author',
-        'group'
+        'group',
+        'is_published'
     )
     search_fields = ('text',)
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
-    list_editable = ('group', 'text')
+    list_editable = ('group', 'text', 'is_published',)
 
 
 class PostComment(admin.ModelAdmin):

@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_page
 
 from .forms import CommentForm, PostForm
-from .models import Group, Post, User, Follow
+from .models import Comment, Group, Post, User, Follow
 from .utils import paginator_page
 
 
@@ -86,6 +86,7 @@ def post_create(request):
     if form.is_valid():
         form = form.save(commit=False)
         form.author = request.user
+        form.is_published = False
         form.save()
         return redirect('posts:profile', request.user.username)
 
@@ -157,3 +158,19 @@ def profile_unfollow(request, username):
         author__username=username
     ).delete()
     return redirect('posts:profile', username)
+
+
+@login_required
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if post.author == request.user:
+        post.delete()
+    return redirect('posts:profile', post.author.username)
+
+
+@login_required
+def comment_delete(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment.author == request.user:
+        comment.delete()
+    return redirect('posts:post_detail', post_id=comment.post.pk)
