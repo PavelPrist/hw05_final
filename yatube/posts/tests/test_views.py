@@ -55,7 +55,8 @@ class PostPagesTest(TestCase):
             author=cls.user,
             text='Тестовый пост для теста',
             group=cls.group,
-            image=cls.uploaded_image
+            image=cls.uploaded_image,
+            is_published=True
         )
         cls.template_urls = [
             (

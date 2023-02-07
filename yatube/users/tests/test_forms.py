@@ -30,7 +30,7 @@ class UsersFormTests(TestCase):
             follow=True
         )
         user_last = User.objects.latest('id')
-        self.assertRedirects(response, reverse('posts:index'))
+        self.assertRedirects(response, reverse('users:login'))
         self.assertEqual(User.objects.count(), users_count + 1)
         self.assertEqual(user_last.username, form_data['username'])
         self.assertEqual(user_last.first_name, form_data['first_name'])

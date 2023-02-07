@@ -8,7 +8,8 @@
       <form method="post" action="{% url 'posts:add_comment' post.id %}">
         {% csrf_token %}
         <div class="form-group mb-2">
-          {{ form.text|addclass:"form-control" }}
+            {{ form.media }}
+          {{ form.text |addclass:"form-control" }}
         </div>
         <button type="submit" class="btn btn-primary">Отправить</button>
       </form>
@@ -25,7 +26,7 @@
         </a>
       </h5>
       <p>
-        {{ comment.text }}
+        {{ comment.text |safe }}
       </p>
 
               <br>

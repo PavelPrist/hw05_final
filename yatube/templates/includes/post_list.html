@@ -1,22 +1,56 @@
 {% load thumbnail %}
-    <ul>
-      <li>
-        Автор: {{ post.author.get_full_name }}
-        <a href="{% url 'posts:profile' post.author.username %}">
-          все посты пользователя</a>
-      </li>
-      <li>
-        Дата публикации: {{ post.pub_date|date:"d E Y" }}
-      </li>
-        <li>
-        Группа: {{ post.group.title }}
-        </li>
-      </ul>
+<div class="row mb-2">
+    {% for post in page_obj %}
+        {% if post.is_published %}
 
-      {% thumbnail post.image "x700" crop="0%" upscale=True as im %}
-    <img class="card-img my-3" src="{{ im.url }}" >
-  {% endthumbnail %}
+            <div class="col-md-3 ">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column justify-content-center align-items-center position-static">
 
-    <p>{{ post.text }}</p>
+                        <ul>
+                          <li>
+                            Автор: {{ post.author.get_full_name }}
+                            <a href="{% url 'posts:profile' post.author.username %}">
+                              все посты пользователя</a>
+                          </li>
+                          <li>
+                            Дата публикации: {{ post.pub_date|date:"d E Y" }}
+                          </li>
+                            <li>
+                            Группа: {{ post.group.title }}
+                            </li>
+                          </ul>
 
-  <a href="{% url 'posts:post_detail' post.id %}"> подробная информация </a>
+                                      {% thumbnail post.image "700x700" padding=True upscale=True as im %}
+                                    <img class="card-img my-3" src="{{ im.url }}" >
+                                      {% endthumbnail %}
+                                <div class="card-body">
+                                    <p>{{ post.text |safe|truncatechars:60  }}</p>
+
+                                </div>
+                      <a class="btn btn-primary" href="{% url 'posts:post_detail' post.id %}"> подробная информация </a>
+                            <p>
+                            <p>{% if post.group %}
+                              <a class="btn btn-primary" href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
+                               {% endif %}
+
+            </div>
+            </div>
+            </div>
+
+
+       {% else %}
+            <article>
+                <div class="list-group">
+                     <li class="list-group-item">
+                         Пост № {{ post.pk }} Извините. Ожидает одобрения администрацией.
+                     </li>
+                </div>
+            </article>
+      {% endif %}
+  {% endfor %}
+
+  {% include 'includes/paginator.html' %}
+
+</div>
+

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} Поиск {% endblock %}
+
+{% block content %}
+
+<h1>Результат поиска: </h1>
+<p>
+<hr>
+<ul>
+  {% for post in object_list %}
+    <li>
+      {{ post.text |truncatechars:100 }}
+        <p>
+        <a class="btn btn-primary" href="{% url 'posts:post_detail' post.id %}"> подробная информация </a>
+    <hr>
+    <br>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

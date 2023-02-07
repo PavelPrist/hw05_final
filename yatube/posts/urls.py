@@ -34,5 +34,6 @@ urlpatterns = [
         'posts/comments/<int:comment_id>/delete/',
         views.comment_delete,
         name='delete_comment'
-    )
+    ),
+    path('search/', views.SearchResultsView.as_view(), name="search_results"),
 ]

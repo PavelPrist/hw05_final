@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -24,11 +25,12 @@ class Group(models.Model):
 
 class Post(CreatedModel):
 
-    text = models.TextField(
+    text = RichTextField(
         validators=[validate_not_empty],
         verbose_name='Текст поста',
         help_text='*Введите текст поста'
     )
+    description = RichTextField(blank=True, null=True)
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -47,10 +49,11 @@ class Post(CreatedModel):
     image = models.ImageField(
         'Картинка',
         upload_to='posts/',
-        blank=True
+        blank=True,
+        null=True
     )
     is_published = models.BooleanField(
-        default = False
+        default=False,
     )
 
     def __str__(self) -> str:
@@ -79,7 +82,7 @@ class Comment(models.Model):
         verbose_name='Автор',
         help_text='Автор поста'
     )
-    text = models.TextField(
+    text = RichTextField(
         verbose_name='Текст комментария',
         help_text='Введите текст комментария'
     )
@@ -122,4 +125,6 @@ class Follow(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.user.username}, {self.following.username}'
+        return (
+            f'Follower-{self.user.username}, Following-{self.author.username}'
+        )

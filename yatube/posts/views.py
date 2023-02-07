@@ -1,13 +1,15 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_page
+from django.views.generic import ListView
 
 from .forms import CommentForm, PostForm
 from .models import Comment, Group, Post, User, Follow
 from .utils import paginator_page
 
 
-@cache_page(20, key_prefix='index_page')
+@cache_page(5, key_prefix='index_page')
 def index(request):
     posts = Post.objects.select_related("group")
     page_obj = paginator_page(request, posts)
@@ -142,12 +144,10 @@ def follow_index(request):
 @login_required
 def profile_follow(request, username):
     following_author = get_object_or_404(User, username=username)
-    follower = request.user
-    if follower != following_author and follower != following_author.follower:
-        Follow.objects.get_or_create(
-            user=follower,
-            author=following_author
-        )
+    Follow.objects.get_or_create(
+        user=request.user,
+        author=following_author
+    )
     return redirect('posts:profile', username)
 
 
@@ -174,3 +174,15 @@ def comment_delete(request, comment_id):
     if comment.author == request.user:
         comment.delete()
     return redirect('posts:post_detail', post_id=comment.post.pk)
+
+
+class SearchResultsView(ListView):
+    model = Post
+    template_name = 'search_results.html'
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Post.objects.filter(
+            Q(text__icontains=query) | Q(
+                author__username__icontains=query)
+        )
+        return object_list
