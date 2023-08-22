@@ -21,19 +21,20 @@
                             </li>
                           </ul>
 
-                                      {% thumbnail post.image "700x700" padding=True upscale=True as im %}
-                                    <img class="card-img my-3" src="{{ im.url }}" >
-                                      {% endthumbnail %}
-                                <div class="card-body">
-                                    <p>{{ post.text |safe|truncatechars:60  }}</p>
+                              {% thumbnail post.image "700x700" padding=True upscale=True as im %}
+                                 <img class="card-img my-3" src="{{ im.url }}" >
+                              {% endthumbnail %}
 
-                                </div>
+                            <div class="card-body">
+                                <p>{{ post.text |safe|truncatechars:60  }}</p>
+                            </div>
+
                       <a class="btn btn-primary" href="{% url 'posts:post_detail' post.id %}"> подробная информация </a>
                             <p>
-                            <p>{% if post.group %}
+                            <p>
+                               {% if post.group %}
                               <a class="btn btn-primary" href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>
                                {% endif %}
-
             </div>
             </div>
             </div>
